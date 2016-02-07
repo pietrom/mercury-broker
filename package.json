@@ -1,0 +1,13 @@
+{
+  "name": "mercury-broker",
+  "version": "0.0.1",
+  "description": "Simple message broker for JavaScript",
+  "main": "index.js",
+  "scripts": {
+    "test": "grunt jasmine"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-jasmine": "@1.0.0"
+  }
+}
