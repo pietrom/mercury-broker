@@ -4,11 +4,11 @@
   "description": "Simple message broker for JavaScript",
   "main": "src/main/js/broker.js",
   "scripts": {
-    "test": "jasmine"
+    "test": "node ./node_modules/jasmine/bin/jasmine.js"
   },
   "devDependencies": {
-    "grunt": "~0.4.5"
+    "grunt": "~0.4.5",
+    "jasmine": "^2.4.1"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }
