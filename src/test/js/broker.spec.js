@@ -1,3 +1,5 @@
+var broker = require('../../main/js/broker.js');
+
 describe('broker', function() {
   it('can subscribe', function() {
     var timesCalled = 0;
