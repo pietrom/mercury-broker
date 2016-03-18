@@ -46,4 +46,17 @@ describe('broker', function() {
     expect(delivered0).toBe('an-event: foobar');
     expect(delivered1).toBe('foobar [an-event]');
   });
+  it('can handle different events with different subscribers', function() {
+    var delivered0 = null;
+    broker.subscribe('an-event', function(evt, payload) {
+      delivered0 = evt + ': ' + payload;
+    });
+    var delivered1 = null;
+    broker.subscribe('another-event', function(evt, payload) {
+      delivered1 = payload + ' [' + evt + ']';
+    });
+    broker.publish('an-event', 'foobar');
+    expect(delivered0).toBe('an-event: foobar');
+    expect(delivered1).toBe(null);
+  });
 });
