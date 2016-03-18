@@ -26,4 +26,23 @@ describe('broker', function() {
       hg.publish('an-event', 'Hello, World!');
       expect(result).toBe('an-event: HELLO, WORLD!?!');
    });
+
+   it('payload transformations can\'t have cross-subscriber side effects', function() {
+      var result0 = null;
+      hg.subscribe('cross-event', function(evt, payload) {
+         result0 = payload.text;
+      }, function(data) {
+         data.text = data.text.toUpperCase();
+         return data;
+      });
+
+      var result1 = null;
+      hg.subscribe('cross-event', function(evt, payload) {
+         result1 = payload.text;
+      });
+
+      hg.publish('cross-event', { text: 'Hello, World!' });
+      expect(result0).toBe('HELLO, WORLD!');
+      expect(result1).toBe('Hello, World!');
+   });
 });

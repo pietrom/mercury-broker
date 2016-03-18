@@ -36,9 +36,10 @@ var broker = {
   },
   publish: function(event, payload) {
      subscribers[event].forEach(function(sub) {
+        var clonedPayload = JSON.parse(JSON.stringify(payload));
         sub.sub(event, sub.trans.reduce(function(data, fn) {
            return fn(data);
-        }, payload));
+        }, clonedPayload));
      });
   }
 };
