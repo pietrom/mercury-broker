@@ -1,6 +1,6 @@
 {
   "name": "mercury-broker",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Simple message broker for JavaScript",
   "main": "src/main/js/broker.js",
   "scripts": {
