@@ -17,10 +17,8 @@ describe('broker', function() {
       hg.subscribe('an-event', function(evt, payload) {
          result = evt + ': ' + payload;
       }, [function(data) {
-         console.log(data);
          return data.toUpperCase();
       }, function(data) {
-         console.log(data);
          return data + '?!';
       }]);
       hg.publish('an-event', 'Hello, World!');
