@@ -44,4 +44,8 @@ var broker = {
   }
 };
 
-module.exports = broker;
+if(module.exports) {
+   module.exports = broker;
+} else if(window) {
+   window.hg = broker;
+}
