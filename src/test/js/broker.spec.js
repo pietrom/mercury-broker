@@ -32,9 +32,18 @@ describe('broker', function() {
     broker.publish('an-event', 'foobar');
     expect(delivered).toBe('an-event: foobar');
   });
-/*
-  it('fail ever', function() {
-    expect(false).toBe(true);
+
+  it('can register multiple subscribers', function() {
+    var delivered0 = null;
+    broker.subscribe('an-event', function(evt, payload) {
+      delivered0 = evt + ': ' + payload;
+    });
+    var delivered1 = null;
+    broker.subscribe('an-event', function(evt, payload) {
+      delivered1 = payload + ' [' + evt + ']';
+    });
+    broker.publish('an-event', 'foobar');
+    expect(delivered0).toBe('an-event: foobar');
+    expect(delivered1).toBe('foobar [an-event]');
   });
-  */
 });
