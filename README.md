@@ -1,7 +1,7 @@
 # hg-boker
 A lightweight *message broker* for JavaScript
 
-## Simple usage
+## Basic usage
 ### Require module
     var hg = require('mercury-broker');
 ### Event subscription    
