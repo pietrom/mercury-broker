@@ -37,4 +37,4 @@ A lightweight *message broker* for JavaScript
         hg.publish('an-event', 'Hello, World!');
         // Output: ::HELLO, WORLD!
 
-[Try hg-broker in your browser](https://tonicdev.com/npm/hg-broker) through [Tonic](tonicdev.com)
+[Try hg-broker in your browser](https://tonicdev.com/npm/mercury-broker) through [Tonic](tonicdev.com)
