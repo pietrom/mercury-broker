@@ -1,7 +1,7 @@
 {
   "name": "mercury-broker",
   "version": "0.2.2",
-  "description": "Simple message broker for JavaScript",
+  "description": "Lightweight message broker for JavaScript",
   "main": "src/main/js/broker.js",
   "scripts": {
     "test": "node ./node_modules/jasmine/bin/jasmine.js",
@@ -16,5 +16,6 @@
   "repository": {
      "type": "git",
      "url": "git://github.com/pietrom/mercury-broker.git"
-  }
+  },
+  "license": "GPL-2.0"
 }

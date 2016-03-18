@@ -1,0 +1,27 @@
+{
+  "name": "mercury-broker",
+  "description": "Lightweight message broker for JavaScript",
+  "main": "src/main/js/broker.js",
+  "authors": [
+    "Pietro Martinelli"
+  ],
+  "license": "GPL-2.0",
+  "keywords": [
+    "broker",
+    "messaging",
+    "publish",
+    "subscriber"
+  ],
+  "homepage": "https://github.com/pietrom/mercury-broker",
+  "moduleType": [
+    "globals",
+    "node"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
