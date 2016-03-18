@@ -1,7 +1,8 @@
 {
   "name": "mercury-broker",
   "version": "0.3.0",
-  "description": "Lightweight message broker for JavaScript",
+  "description": "Lightweight message broker for JavaScript",  
+  "keywords": "message broker publish subscriber",
   "main": "src/main/js/broker.js",
   "scripts": {
     "test": "node ./node_modules/jasmine/bin/jasmine.js",
