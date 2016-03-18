@@ -11,5 +11,10 @@
     "grunt": "~0.4.5",
     "jasmine": "^2.4.1"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "author": "Pietro Martinelli",
+  "repository": {
+     "type": "git",
+     "url": "git://github.com/pietrom/mercury-broker.git"
+  }
 }
