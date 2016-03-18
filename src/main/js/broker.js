@@ -1,11 +1,15 @@
 var subscribers = {};
 
+function identity(data) {
+   return data;
+};
+
 var broker = {
-  subscribe: function(event, subscriber) {
+  subscribe: function(event, subscriber, transformation) {
     if(!subscribers[event]) {
       subscribers[event] = [];
     }
-    subscribers[event].push(subscriber);
+    subscribers[event].push({sub: subscriber, trans: transformation || identity});
 
     return function() {
       var index = subscribers[event].indexOf(subscriber);
@@ -14,7 +18,7 @@ var broker = {
   },
   publish: function(event, payload) {
     subscribers[event].forEach(function(sub) {
-      sub(event, payload);
+      sub.sub(event, sub.trans(payload));
     });
   }
 };
