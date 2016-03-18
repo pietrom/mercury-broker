@@ -13,3 +13,5 @@ A lightweight *message broker* for JavaScript
     // Output: -- an-event Hello, World!
 ### Subscription removal
     unsubscribe();
+
+[Try mercury-broker in yout browser](https://tonicdev.com/npm/mercury-broker) through [Tonic](tonicdev.com)
