@@ -14,4 +14,4 @@ A lightweight *message broker* for JavaScript
 ### Subscription removal
     unsubscribe();
 
-[Try mercury-broker in yout browser](https://tonicdev.com/npm/mercury-broker) through [Tonic](tonicdev.com)
+[Try mercury-broker in your browser](https://tonicdev.com/npm/mercury-broker) through [Tonic](tonicdev.com)
