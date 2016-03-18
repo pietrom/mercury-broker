@@ -1,4 +1,4 @@
-# hg-boker
+# mercury-broker
 A lightweight *message broker* for JavaScript
 
 ## Basic usage
