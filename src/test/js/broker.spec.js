@@ -23,6 +23,15 @@ describe('broker', function() {
     broker.publish('an-event', {});
     expect(timesCalled).toBe(1);
   });
+
+  it('can provide paylod for events', function() {
+    var delivered = null;
+    broker.subscribe('an-event', function(evt, payload) {
+      delivered = evt + ': ' + payload;
+    });
+    broker.publish('an-event', 'foobar');
+    expect(delivered).toBe('an-event: foobar');
+  });
 /*
   it('fail ever', function() {
     expect(false).toBe(true);
