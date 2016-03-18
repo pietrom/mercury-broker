@@ -11,4 +11,19 @@ describe('broker', function() {
       hg.publish('an-event', 'Hello, World!');
       expect(result).toBe('an-event: HELLO, WORLD!');
    });
+
+   it('can provide multiple paylod transformation to be applied in sequence', function() {
+      var result = null;
+      hg.subscribe('an-event', function(evt, payload) {
+         result = evt + ': ' + payload;
+      }, [function(data) {
+         console.log(data);
+         return data.toUpperCase();
+      }, function(data) {
+         console.log(data);
+         return data + '?!';
+      }]);
+      hg.publish('an-event', 'Hello, World!');
+      expect(result).toBe('an-event: HELLO, WORLD!?!');
+   });
 });
