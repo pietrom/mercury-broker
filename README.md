@@ -28,7 +28,7 @@ A lightweight *message broker* for JavaScript
         function toUpper(str) {
             return str.toUpperCase();
         }
-        function toUpper(str) {
+        function addPrefix(str) {
             return '::' + str;
         }
         hg.subscribe('an-event', function(evt, payload) {
