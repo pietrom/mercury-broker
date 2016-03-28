@@ -39,7 +39,9 @@ describe('message transformations', function() {
          result1 = payload.text;
       });
 
-      hg.publish('cross-event', { text: 'Hello, World!' });
+      hg.publish('cross-event', {
+         text: 'Hello, World!'
+      });
       expect(result0).toBe('HELLO, WORLD!');
       expect(result1).toBe('Hello, World!');
    });
