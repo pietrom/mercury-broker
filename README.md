@@ -36,5 +36,38 @@ A lightweight *message broker* for JavaScript
         }, [ toUpper, addPrefix ]);
         hg.publish('an-event', 'Hello, World!');
         // Output: ::HELLO, WORLD!
+### Asynchronous event delivering
+        hg.subscribe('an-event', function() {
+          called = true;
+        });
+        // Non-blocking event publishing: publisher doesn't wait for
+        //  subscribers' processing
+        hg.publish('an-event', {}, {
+          async: true
+        });
+        console.log(called); // **false**
+        setTimeout(function() {
+          console.log(called); // **true**
+        }, 5);
+### Delayed (asynchronous) event delivering
+         hg.subscribe('an-event', function() {
+            called = true;
+         });
+         // Delayed event publishing
+         hg.publish('an-event', {}, {
+           delay: 2000
+         });
+         console.log(called); // **false**
+         setTimeout(function() {
+           console.log(called); // **false**
+         }, 500);
+         console.log(called); // **false**
+         setTimeout(function() {
+           console.log(called); // **false**
+         }, 1500);
+         console.log(called); // **false**
+         setTimeout(function() {
+           console.log(called); // **true**
+         }, 2500);
 
 [Try hg-broker in your browser](https://tonicdev.com/npm/mercury-broker) through [Tonic](tonicdev.com)
