@@ -1,6 +1,6 @@
 {
   "name": "mercury-broker",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "Lightweight message broker for JavaScript",
   "keywords": "message broker publish subscriber",
   "main": "src/main/js/broker.js",
@@ -15,8 +15,8 @@
   "dependencies": {},
   "author": "Pietro Martinelli",
   "repository": {
-     "type": "git",
-     "url": "git://github.com/pietrom/mercury-broker.git"
+    "type": "git",
+    "url": "git://github.com/pietrom/mercury-broker.git"
   },
   "license": "(LGPL-2.0 OR GPL-2.0)"
 }
