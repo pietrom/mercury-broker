@@ -74,7 +74,7 @@ A lightweight *message broker* for JavaScript
          setTimeout(function() {
            console.log(called); // **true**
          }, 2500);
-### Periodic event delivering
+### Periodic event publishing
          hg.subscribe('periodic-event', function() {
             called = true;
          });
