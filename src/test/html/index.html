@@ -1,0 +1,10 @@
+<html>
+   <script src="../../main/js/broker.js"></script>
+   <script>
+      hg.subscribe('test-event', function(evt, body) {
+         document.write(body);
+      });
+
+      hg.publish('test-event', 'Hello, mercury-broker!')
+   </script>
+</html>
