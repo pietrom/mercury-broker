@@ -1,6 +1,6 @@
 var hg = require('../../main/js/broker.js');
 
-describe('broker', function() {
+describe('message transformations', function() {
    it('can provide paylod transformation contextually to subscription', function() {
       var result = null;
       hg.subscribe('an-event', function(evt, payload) {
