@@ -38,21 +38,32 @@
          };
       },
       publish: function(event, payload, options) {
-         subscribers[event].forEach(function(sub) {
-            var executeSubscriber = function() {
-               var clonedPayload = JSON.parse(JSON.stringify(payload));
-               sub.sub(event, sub.trans.reduce(function(data, fn) {
-                  return fn(data);
-               }, clonedPayload));
+         var publishEvent = function() {
+            subscribers[event].forEach(function(sub) {
+               var executeSubscriber = function() {
+                  var clonedPayload = JSON.parse(JSON.stringify(payload));
+                  sub.sub(event, sub.trans.reduce(function(data, fn) {
+                     return fn(data);
+                  }, clonedPayload));
+               };
+               var isAsync = options && (options.async || options.delay);
+               if (isAsync) {
+                  var delay = options.delay || 0;
+                  setTimeout(executeSubscriber, delay);
+               } else {
+                  executeSubscriber();
+               }
+            });
+         };
+
+         if (options && options.timeout) {
+            var task = setInterval(publishEvent, options.timeout);
+            return function() {
+               clearInterval(task);
             };
-            var isAsync = options && (options.async || options.delay);
-            if (isAsync) {
-               var delay = options.delay || 0;
-               setTimeout(executeSubscriber, delay);
-            } else {
-               executeSubscriber();
-            }
-         });
+         } else {
+            publishEvent();
+         }
       }
    };
 

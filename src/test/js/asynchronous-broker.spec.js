@@ -18,7 +18,6 @@ describe('Asynchronous message delivery', function() {
 
    it('Events can be published specifying delay in millis', function(done) {
       var called = false;
-      var called = false;
       broker.subscribe('an-event', function() {
          called = true;
       });
@@ -36,5 +35,18 @@ describe('Asynchronous message delivery', function() {
          expect(called).toBe(true);
          done();
       }, 2000);
+   });
+
+   it('Can publish events perdiodically', function(done) {
+      var counter = 0;
+      broker.subscribe('periodic-event', function() {
+         counter++;
+      });
+      var stop = broker.publish('periodic-event', {}, { timeout: 200 });
+      setTimeout(function() { expect(counter).toBe(0); }, 100);
+      setTimeout(function() { expect(counter).toBe(1); }, 300);
+      setTimeout(function() { expect(counter).toBe(2); }, 500);
+      setTimeout(function() { expect(counter).toBe(4); stop(); }, 900);
+      setTimeout(function() { expect(counter).toBe(4); done(); }, 1100);
    });
 });
