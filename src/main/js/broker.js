@@ -45,8 +45,10 @@
                   return fn(data);
                }, clonedPayload));
             };
-            if (options && options.async) {
-               setTimeout(executeSubscriber, 0);
+            var isAsync = options && (options.async || options.delay);
+            if (isAsync) {
+               var delay = options.delay || 0;
+               setTimeout(executeSubscriber, delay);
             } else {
                executeSubscriber();
             }
