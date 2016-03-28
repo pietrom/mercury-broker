@@ -1,51 +1,53 @@
-var subscribers = {};
+(function() {
+   var subscribers = {};
 
-function identity(data) {
-  return data;
-};
+   function identity(data) {
+     return data;
+   };
 
-var broker = {
-   subscribe: function(event, subscriber, transformations) {
-      if (!subscribers[event]) {
-         subscribers[event] = [];
-      }
-      var trans = [identity];
-      if (transformations) {
-         switch (typeof(transformations)) {
-            case 'function': {
-               trans = [transformations];
-               break;
-            }
-            case 'object': {
-               if (transformations.length) {
-                  trans = transformations;
+   var broker = {
+      subscribe: function(event, subscriber, transformations) {
+         if (!subscribers[event]) {
+            subscribers[event] = [];
+         }
+         var trans = [identity];
+         if (transformations) {
+            switch (typeof(transformations)) {
+               case 'function': {
+                  trans = [transformations];
+                  break;
                }
-              break;
+               case 'object': {
+                  if (transformations.length) {
+                     trans = transformations;
+                  }
+                 break;
+              }
            }
         }
+        subscribers[event].push({
+           sub: subscriber,
+           trans: trans
+        });
+
+        return function() {
+           var index = subscribers[event].indexOf(subscriber);
+           subscribers[event].splice(index, 1);
+        };
+     },
+     publish: function(event, payload) {
+        subscribers[event].forEach(function(sub) {
+           var clonedPayload = JSON.parse(JSON.stringify(payload));
+           sub.sub(event, sub.trans.reduce(function(data, fn) {
+              return fn(data);
+           }, clonedPayload));
+        });
      }
-     subscribers[event].push({
-        sub: subscriber,
-        trans: trans
-     });
+   };
 
-     return function() {
-        var index = subscribers[event].indexOf(subscriber);
-        subscribers[event].splice(index, 1);
-     };
-  },
-  publish: function(event, payload) {
-     subscribers[event].forEach(function(sub) {
-        var clonedPayload = JSON.parse(JSON.stringify(payload));
-        sub.sub(event, sub.trans.reduce(function(data, fn) {
-           return fn(data);
-        }, clonedPayload));
-     });
-  }
-};
-
-if(module.exports) {
-   module.exports = broker;
-} else if(window) {
-   window.hg = broker;
-}
+   if(module.exports) {
+      module.exports = broker;
+   } else if(window) {
+      window.hg = broker;
+   }
+})();
