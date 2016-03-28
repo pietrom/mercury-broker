@@ -2,8 +2,13 @@
 A lightweight *message broker* for JavaScript
 
 ## Basic usage
-### Require module
+### Require (npm) module
     var hg = require('mercury-broker');
+### Including (bower) module
+    <script src="/bower_components/mercury-broker/src/main/js/broker.js"><script>
+    <script>
+        // Global [window.]hg variable is now available
+    </script>
 ### Event subscription    
     var unsubscribe = hg.subscribe('an-event', function(evt, payload) {
         console.log('--', evt, payload);
