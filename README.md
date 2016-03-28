@@ -69,5 +69,12 @@ A lightweight *message broker* for JavaScript
          setTimeout(function() {
            console.log(called); // **true**
          }, 2500);
-
+### Periodic event delivering
+         hg.subscribe('periodic-event', function() {
+            called = true;
+         });
+         // Publishes 'periodic-event' every 0.2s
+         hg.publish('periodic-event', {}, {
+           timeout: 200
+         });
 [Try hg-broker in your browser](https://tonicdev.com/npm/mercury-broker) through [Tonic](tonicdev.com)
