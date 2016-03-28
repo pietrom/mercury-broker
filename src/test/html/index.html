@@ -13,8 +13,24 @@
       hg.subscribe('test-event', function(evt, payload) {
          appendToBody(payload);
       });
+      hg.subscribe('periodic-event', function(evt, payload) {
+         appendToBody('<em>' + payload + '</em>');
+      });
 
       hg.publish('test-event', 'Hello, mercury-broker!');
       hg.publish('test-event', 'after 2s: Hello, mercury-broker!', { delay: 2000 });
+
+      var stop;
+      function startPublishing() {
+         stop = hg.publish('periodic-event', 'every 0.5s: Hello, mercury-broker!', { timeout: 500 });
+      }
+
+      function stopPubishing() {
+         stop();
+      }
+
+      startPublishing();
    </script>
+   <button onclick="stopPubishing();">Stop</button>
+   <button onclick="startPublishing();">Start</button>
 </html>
