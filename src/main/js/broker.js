@@ -45,7 +45,7 @@
      }
    };
 
-   if(module.exports) {
+   if(typeof(module) != 'undefined' && module.exports) {
       module.exports = broker;
    } else if(window) {
       window.hg = broker;
