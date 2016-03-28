@@ -35,12 +35,19 @@
            subscribers[event].splice(index, 1);
         };
      },
-     publish: function(event, payload) {
+     publish: function(event, payload, options) {
         subscribers[event].forEach(function(sub) {
-           var clonedPayload = JSON.parse(JSON.stringify(payload));
-           sub.sub(event, sub.trans.reduce(function(data, fn) {
-              return fn(data);
-           }, clonedPayload));
+           var executeSubscriber = function() {
+             var clonedPayload = JSON.parse(JSON.stringify(payload));
+               sub.sub(event, sub.trans.reduce(function(data, fn) {
+                  return fn(data);
+               }, clonedPayload));
+          };
+          if(options && options.async) {
+             setTimeout(executeSubscriber, 0);
+          } else {
+             executeSubscriber();
+          }
         });
      }
    };
