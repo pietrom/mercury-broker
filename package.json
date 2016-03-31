@@ -5,8 +5,7 @@
   "keywords": "message broker publish subscriber",
   "main": "src/main/js/broker.js",
   "scripts": {
-    "test": "node ./node_modules/jasmine/bin/jasmine.js",
-    "postinstall": "npm test"
+    "test": "node ./src/test/run-tests.js"
   },
   "devDependencies": {
     "grunt": "~0.4.5",
