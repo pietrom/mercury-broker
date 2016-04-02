@@ -1,6 +1,18 @@
 # mercury-broker
 A lightweight *message broker* for JavaScript
 
+## Main features
+- Publish/subscriber semantics, with both synchronous and asynchronous event publishing
+- Message payload transformation
+- Delayed message delivery
+- Periodically message publishing
+
+## You should use mercury-broker because...
+- It's very *light* and very simple
+- It's a fully opensource solution
+- It has no external dependency: no [left-pad](http://blog.npmjs.org/post/141577284765/kik-left-pad-and-npm) risk
+- It's available both as npm module and as bower module
+
 ## Basic usage
 ### Require (npm) module
     var hg = require('mercury-broker');
@@ -62,17 +74,17 @@ A lightweight *message broker* for JavaScript
          hg.publish('an-event', {}, {
            delay: 2000
          });
-         console.log(called); // **false**
+         console.log(called); // false
          setTimeout(function() {
-           console.log(called); // **false**
+           console.log(called); // false
          }, 500);
-         console.log(called); // **false**
+         console.log(called); // false
          setTimeout(function() {
-           console.log(called); // **false**
+           console.log(called); // false
          }, 1500);
-         console.log(called); // **false**
+         console.log(called); // false
          setTimeout(function() {
-           console.log(called); // **true**
+           console.log(called); // true
          }, 2500);
 ### Periodic event publishing
          hg.subscribe('periodic-event', function() {
