@@ -5,9 +5,9 @@ describe('message transformations', function() {
       var result = null;
       hg.subscribe('an-event', function(evt, payload) {
          result = evt + ': ' + payload;
-      }, function(data) {
+      }, { transformations: [function(data) {
          return data.toUpperCase();
-      });
+      }]});
       hg.publish('an-event', 'Hello, World!');
       expect(result).toBe('an-event: HELLO, WORLD!');
    });
@@ -16,11 +16,11 @@ describe('message transformations', function() {
       var result = null;
       hg.subscribe('an-event', function(evt, payload) {
          result = evt + ': ' + payload;
-      }, [function(data) {
+      }, {transformations: [function(data) {
          return data.toUpperCase();
       }, function(data) {
          return data + '?!';
-      }]);
+      }]});
       hg.publish('an-event', 'Hello, World!');
       expect(result).toBe('an-event: HELLO, WORLD!?!');
    });
@@ -29,10 +29,10 @@ describe('message transformations', function() {
       var result0 = null;
       hg.subscribe('cross-event', function(evt, payload) {
          result0 = payload.text;
-      }, function(data) {
+      }, {transformations: [ function(data) {
          data.text = data.text.toUpperCase();
          return data;
-      });
+      }]});
 
       var result1 = null;
       hg.subscribe('cross-event', function(evt, payload) {

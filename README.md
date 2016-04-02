@@ -38,7 +38,7 @@ A lightweight *message broker* for JavaScript
     }
     hg.subscribe('an-event', function(evt, payload) {
         console.log(payload);
-    }, toUpper);
+    }, { transformations: [toUpper]});
     hg.publish('an-event', 'Hello, World!');
     // Output: HELLO, WORLD!
 ### Multiple payload transformations
@@ -50,7 +50,7 @@ A lightweight *message broker* for JavaScript
         }
         hg.subscribe('an-event', function(evt, payload) {
             console.log(payload);
-        }, [ toUpper, addPrefix ]);
+        }, { transformations: [ toUpper, addPrefix ] });
         hg.publish('an-event', 'Hello, World!');
         // Output: ::HELLO, WORLD!
 ### Asynchronous event delivering

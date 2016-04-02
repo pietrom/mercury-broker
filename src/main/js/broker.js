@@ -6,12 +6,13 @@
    };
 
    var broker = {
-      subscribe: function(event, subscriber, transformations) {
+      subscribe: function(event, subscriber, options) {
          if (!subscribers[event]) {
             subscribers[event] = [];
          }
          var trans = [identity];
-         if (transformations) {
+         if (options && options.transformations) {
+            var transformations = options.transformations;
             switch (typeof(transformations)) {
                case 'function':
                   {
@@ -29,7 +30,8 @@
          }
          subscribers[event].push({
             sub: subscriber,
-            trans: trans
+            trans: trans,
+            options: options
          });
 
          return function() {
@@ -42,13 +44,16 @@
             subscribers[event].forEach(function(sub) {
                var executeSubscriber = function() {
                   try {
-                     var clonedPayload = JSON.parse(JSON.stringify(payload));
+                     var computedPayload = JSON.parse(JSON.stringify(payload));
                      if(options && options.generator) {
-                        clonedPayload = options.generator(clonedPayload);
+                        computedPayload = options.generator(computedPayload);
                      }
-                     sub.sub(event, sub.trans.reduce(function(data, fn) {
+                     computedPayload = sub.trans.reduce(function(data, fn) {
                         return fn(data);
-                     }, clonedPayload));
+                     }, computedPayload);
+                     if(!sub.options || !sub.options.filter || sub.options.filter(computedPayload)) {
+                        sub.sub(event, computedPayload);
+                     }
                   } catch(err) {
                      console.log('Error during subscriber execution', err);
                   }

@@ -76,4 +76,17 @@ describe('broker', function() {
       expect(delivered0).toBe('an-event: foobar');
       expect(delivered1).toBe(null);
    });
+   it('Subscriber can filter events providing predicates to be applied to payload', function() {
+      var deliveredCount0 = 0;
+      broker.subscribe('filtered-event', function() { deliveredCount0++; });
+      var deliveredCount1 = 0;
+      broker.subscribe('filtered-event', function() { deliveredCount1++; }, { filter: function(payload) {
+         return payload.id % 3 === 0;
+      }});
+      for(var i = 0; i < 6; i++) {
+         broker.publish('filtered-event', { id: i });
+      }
+      expect(deliveredCount0).toBe(6);
+      expect(deliveredCount1).toBe(2);
+   });
 });
