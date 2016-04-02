@@ -51,7 +51,11 @@
                   var delay = options.delay || 0;
                   setTimeout(executeSubscriber, delay);
                } else {
-                  executeSubscriber();
+                  try {
+                     executeSubscriber();
+                  } catch(err) {
+                     console.log('Error during synchronous subscriber execution', err);
+                  }
                }
             });
          };

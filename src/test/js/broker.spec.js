@@ -46,6 +46,23 @@ describe('broker', function() {
       expect(delivered0).toBe('an-event: foobar');
       expect(delivered1).toBe('foobar [an-event]');
    });
+
+   it('Synchronous subscriber\'s exception doesn\'t affect subsequent subscribers', function() {
+      var firstCalled = false;
+      broker.subscribe('exceptional-event', function() {
+         firstCalled = true;
+      });
+      broker.subscribe('exceptional-event', function() {
+         throw 'Error in second subscriber';
+      });
+      var thirdCalled = false;
+      broker.subscribe('exceptional-event', function() {
+         thirdCalled = true;
+      });
+      broker.publish('exceptional-event', {});
+      expect(firstCalled).toBe(true);
+      expect(thirdCalled).toBe(true);
+   });
    it('can handle different events with different subscribers', function() {
       var delivered0 = null;
       broker.subscribe('an-event', function(evt, payload) {
