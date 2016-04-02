@@ -43,6 +43,9 @@
                var executeSubscriber = function() {
                   try {
                      var clonedPayload = JSON.parse(JSON.stringify(payload));
+                     if(options && options.generator) {
+                        clonedPayload = options.generator(clonedPayload);
+                     }
                      sub.sub(event, sub.trans.reduce(function(data, fn) {
                         return fn(data);
                      }, clonedPayload));

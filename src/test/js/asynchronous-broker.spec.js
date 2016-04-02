@@ -50,6 +50,32 @@ describe('Asynchronous message delivery', function() {
       setTimeout(function() { expect(counter).toBe(4); done(); }, 1100);
    });
 
+   it('Payload of periodically published events can be generated through provided \'generator\' function', function(done) {
+      var generatorCounter = 100;
+      var generator = function(seed) {
+         seed.id = generatorCounter;
+         seed.text = seed.text + ' (' + generatorCounter + ')';
+         generatorCounter++;
+         return seed;
+      }
+      var payloads = [];
+      broker.subscribe('payload-generator-event', function(event, payload) {
+         payloads.push(payload);
+      });
+      var stop = broker.publish('payload-generator-event', { text: 'Payload text' }, { interval: 100, generator: generator });
+      setTimeout(function() {
+         stop();
+         expect(payloads.length).toBe(3);
+         expect(payloads[0].id).toBe(100);
+         expect(payloads[1].id).toBe(101);
+         expect(payloads[2].id).toBe(102);
+         expect(payloads[0].text).toBe('Payload text (100)');
+         expect(payloads[1].text).toBe('Payload text (101)');
+         expect(payloads[2].text).toBe('Payload text (102)');
+         done();
+      }, 350);
+   });
+
    it('Asynchronous subscriber\'s exception doesn\'t affect subsequent subscribers', function(done) {
       var firstCalled = false;
       broker.subscribe('exceptional-event', function() {
