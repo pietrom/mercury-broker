@@ -41,21 +41,22 @@
          var publishEvent = function() {
             subscribers[event].forEach(function(sub) {
                var executeSubscriber = function() {
-                  var clonedPayload = JSON.parse(JSON.stringify(payload));
-                  sub.sub(event, sub.trans.reduce(function(data, fn) {
-                     return fn(data);
-                  }, clonedPayload));
+                  try {
+                     var clonedPayload = JSON.parse(JSON.stringify(payload));
+                     sub.sub(event, sub.trans.reduce(function(data, fn) {
+                        return fn(data);
+                     }, clonedPayload));
+                  } catch(err) {
+                     console.log('Error during subscriber execution', err);
+                  }
+
                };
                var isAsync = options && (options.async || options.delay);
                if (isAsync) {
                   var delay = options.delay || 0;
                   setTimeout(executeSubscriber, delay);
                } else {
-                  try {
-                     executeSubscriber();
-                  } catch(err) {
-                     console.log('Error during synchronous subscriber execution', err);
-                  }
+                  executeSubscriber();
                }
             });
          };

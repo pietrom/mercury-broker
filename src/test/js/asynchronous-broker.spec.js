@@ -49,4 +49,24 @@ describe('Asynchronous message delivery', function() {
       setTimeout(function() { expect(counter).toBe(4); stop(); }, 900);
       setTimeout(function() { expect(counter).toBe(4); done(); }, 1100);
    });
+
+   it('Asynchronous subscriber\'s exception doesn\'t affect subsequent subscribers', function(done) {
+      var firstCalled = false;
+      broker.subscribe('exceptional-event', function() {
+         firstCalled = true;
+      });
+      broker.subscribe('exceptional-event', function() {
+         throw 'Error in second subscriber';
+      });
+      var thirdCalled = false;
+      broker.subscribe('exceptional-event', function() {
+         thirdCalled = true;
+      });
+      broker.publish('exceptional-event', {}, { async: true });
+      setTimeout(function() {
+         expect(firstCalled).toBe(true);
+         expect(thirdCalled).toBe(true);
+         done();
+      }, 50);
+   });
 });
