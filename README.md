@@ -6,6 +6,7 @@ A lightweight *message broker* for JavaScript
 - Message payload transformation
 - Delayed message delivery
 - Periodically message publishing
+- Content based event filtering
 
 ## You should use mercury-broker because...
 - It's very *light* and very simple
@@ -94,4 +95,39 @@ A lightweight *message broker* for JavaScript
          hg.publish('periodic-event', {}, {
            interval: 200
          });
+
+### Periodic event publishing with payload generator function
+         hg.subscribe('periodic-event', function(event, payload) {
+            console.log(payload.id, payload.text);
+         });
+         var counter = 0;
+         hg.publish('periodic-event', { text: 'Seed text' }, {
+           interval: 200,
+           generator: function(seed) {
+             seed.id = counter;
+             seed.text = seed.text + ' - ' + counter;
+             counter++;
+             return seed;
+           }
+         });
+         // Output is
+         // 0 Seed text - 0
+         // 1 Seed text - 1
+         // 2 Seed text - 2
+         // 3 Seed text - 3
+         // ...
+### Content-based event filtering
+         hg.subscribe('an-event', function(event, payload) {
+            console.log(payload.it);
+         }, { filter: function(payload) { return payload.id % 3 === 0; }});
+         // Consumes only events whose payload has id that is multiple of three
+         for(var i = 0; i < 10; i++) {
+            hg.publish('an-event', { id: i });
+         }
+         // Output is
+         // 0
+         // 3
+         // 6
+         // 9
+
 [Try hg-broker in your browser](https://tonicdev.com/npm/mercury-broker) through [Tonic](tonicdev.com)
