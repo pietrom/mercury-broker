@@ -42,7 +42,7 @@ describe('Asynchronous message delivery', function() {
       broker.subscribe('periodic-event', function() {
          counter++;
       });
-      var stop = broker.publish('periodic-event', {}, { timeout: 200 });
+      var stop = broker.publish('periodic-event', {}, { interval: 200 });
       setTimeout(function() { expect(counter).toBe(0); }, 100);
       setTimeout(function() { expect(counter).toBe(1); }, 300);
       setTimeout(function() { expect(counter).toBe(2); }, 500);

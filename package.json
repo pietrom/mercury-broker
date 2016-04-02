@@ -1,6 +1,6 @@
 {
   "name": "mercury-broker",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Lightweight message broker for JavaScript",
   "keywords": "message broker publish subscriber",
   "main": "src/main/js/broker.js",

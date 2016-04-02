@@ -56,8 +56,8 @@
             });
          };
 
-         if (options && options.timeout) {
-            var task = setInterval(publishEvent, options.timeout);
+         if (options && options.interval) {
+            var task = setInterval(publishEvent, options.interval);
             return function() {
                clearInterval(task);
             };
