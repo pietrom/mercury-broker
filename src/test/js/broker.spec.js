@@ -12,6 +12,17 @@ describe('broker', function() {
       expect(timesCalled).toBe(3);
    });
 
+   it('can subscribe to all events', function() {
+      var timesCalled = 0;
+      broker.subscribeAll(function() {
+         timesCalled++;
+      });
+      broker.publish('an-event-one', {});
+      broker.publish('an-event-two', {});
+      broker.publish('an-event-three', {});
+      expect(timesCalled).toBe(3);
+   });
+
    it('can unregister', function() {
       var timesCalled = 0;
       var unregister = broker.subscribe('an-event', function() {

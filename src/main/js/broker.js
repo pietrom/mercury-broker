@@ -23,7 +23,7 @@
    }
 
    function publishEvent(event, payload, options) {
-      subscribers[event].forEach(function(sub) {
+         [].concat(subscribers[event] || []).concat(subscribers['*'] || []).forEach(function(sub) {
          var isAsync = options && (options.async || options.delay);
          if (isAsync) {
             var delay = options.delay || 0;
@@ -65,6 +65,9 @@
             var index = subscribers[event].indexOf(subscriber);
             subscribers[event].splice(index, 1);
          };
+      },
+      subscribeAll: function(subscriber, options) {
+         return broker.subscribe('*', subscriber, options)
       },
       publish: function(event, payload, options) {
          if (options && options.interval) {
