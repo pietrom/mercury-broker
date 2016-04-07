@@ -5,7 +5,7 @@
   "authors": [
     "Pietro Martinelli"
   ],
-  "license": "(LGPL-2.0 OR GPL-2.0)",
+  "license": "LGPL-2.1",
   "keywords": [
     "broker",
     "messaging",
