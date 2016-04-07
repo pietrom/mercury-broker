@@ -18,5 +18,5 @@
     "type": "git",
     "url": "git://github.com/pietrom/mercury-broker.git"
   },
-  "license": "(LGPL-2.0 OR GPL-2.0)"
+  "license": "LGPL-2.1"
 }
